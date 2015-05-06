@@ -4,6 +4,8 @@ $(document).ready(function(){
   CURRENT ACCOUNT
   ************************/
 
+  // DEPOSITS
+
   $('#deposit1').on('click', add1);
 
   function add1() {
@@ -20,6 +22,8 @@ $(document).ready(function(){
     }
   } 
 
+  // WITHDRAW
+
   $('#withdraw1').on('click', withdraw1);
 
   function withdraw1() {
@@ -32,9 +36,29 @@ $(document).ready(function(){
     array1.shift();
     initBalance1 = parseInt(array1.join(''));
 
+    if (initBalance1 >= input1) {
+      var finalBalance1 = initBalance1 - input1;
+      $('#balance1').text('$' + finalBalance1);
+    } else {
+      var initBalance2 = $('#balance2').text(); 
+      var array2 = initBalance2.split('');
+      array2.shift();
+      initBalance2 = parseInt(array2.join(''));
 
-    var finalBalance1 = initBalance1 - input1;
-    $('#balance1').text('$' + finalBalance1);
+      fullBalance = initBalance1 + initBalance2;
+
+      if (fullBalance > input1) {
+        input1 = input1 - initBalance1;
+        $('#balance1').text('$0');
+        $('#balance1').css('border', '10px solid red');
+        var finalBalance2 = initBalance2 - input1;
+        $('#balance2').text('$' + finalBalance2);
+      } else {
+        alert('You do not have enough money in your accounts!!!')
+      }
+    }
+      
+    
   }
 
 /************************
@@ -42,7 +66,6 @@ SAVINGS ACCOUNT
 ************************/
 
   $('#deposit2').on('click', add2);
-
 
   function add2() {
     var input2 = parseInt($('#amount2').val());
@@ -70,9 +93,12 @@ SAVINGS ACCOUNT
     array2.shift();
     initBalance2 = parseInt(array2.join(''));
 
-
-    var finalBalance2 = initBalance2 - input2;
-    $('#balance2').text('$' + finalBalance2);
+    if (initBalance2 > input2) {
+      var finalBalance2 = initBalance2 - input2;
+      $('#balance2').text('$' + finalBalance2);
+    } else {
+      alert('There is no overdraft on your savings account!')
+    }
   }
 
 
